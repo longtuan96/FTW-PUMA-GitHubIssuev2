@@ -9,15 +9,11 @@ import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
 library.add(fab, faCheckSquare, faCoffee);
 
 function App() {
-<<<<<<< HEAD
-  return <div></div>;
-=======
   return (
     <div>
       <Nav_Header />
     </div>
   );
->>>>>>> 59949b5c45566d5ed4ceb338f9d121af28f81c81
 }
 
 export default App;
