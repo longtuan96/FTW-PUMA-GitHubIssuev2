@@ -1,0 +1,80 @@
+<<<<<<< HEAD
+=======
+.nav-header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  height: max-content;
+}
+.nav-header-left {
+  margin: 2vh;
+  width: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.nav-header-left a {
+  width: 40px;
+  height: 40px;
+  background-image: url("./image/Vancouver.jfif");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-header-right {
+  margin: 0;
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.nav-header-left p {
+  font-family: cursive;
+  color: #00b4cc;
+  margin: 0;
+  margin-left: 1vh;
+  font-size: 20px;
+}
+
+/* ------------------------------------ */
+@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+.searchButton {
+  width: auto;
+  height: 32px;
+  border: none;
+  background: #00b4cc;
+  text-align: center;
+  color: #fff;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+  font-size: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.searchTerm {
+  border: 3px solid #00b4cc;
+  border-right: none;
+  border-radius: 5px 0 0 5px;
+  outline: none;
+  color: #9dbfaf;
+  height: auto;
+  width: 50%;
+}
+.searchTerm:focus {
+  color: #00b4cc;
+}
+.search {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 80%;
+  margin-right: 5%;
+}
+>>>>>>> 59949b5c45566d5ed4ceb338f9d121af28f81c81
