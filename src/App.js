@@ -5,19 +5,16 @@ import ReactDOM from "react-dom";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { fab } from "@fortawesome/free-brands-svg-icons";
 import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
-
-library.add(fab, faCheckSquare, faCoffee);
-
 import { useEffect, useState } from "react";
+library.add(fab, faCheckSquare, faCoffee);
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 function App() {
-  
   console.log(API_KEY);
   const [user, setUser] = useState("facebook");
   const [repo, setRepo] = useState("react");
   const [issuesId, setIssuesId] = useState(21209);
-  // const octokit = new Octokit({ auth: `${API_KEY}` });
+
   const getIssues = async () => {
     let url = `https://api.github.com/repos/${user}/${repo}/issues?state=all`;
     let res = await fetch(url);
