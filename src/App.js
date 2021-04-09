@@ -1,7 +1,7 @@
 import "./App.css";
 
 function App() {
-  return <div>alo erfjnaerfkjnafnakfnjakfenkaefnjkeanfkanfkanfkanfkanfkankfankfnfniughalgiuahnlkgaglij</div>;
+  return <div></div>;
 }
 
 export default App;
