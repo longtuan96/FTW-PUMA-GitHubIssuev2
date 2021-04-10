@@ -6,7 +6,7 @@ import Pagination from 'react-bootstrap/Pagination'
 const Pagenumber = ({totalpagenum,perpage, paginate,decrease,increase,currentpage,pagenumlimit,maxpagenumlimit,minpagenumlimit}) => {
     const pageNum = [];
     let active = currentpage ;
-    for(let i=1; i<=Math.ceil(totalpagenum/perpage);i++){
+    for(let i=1; i<=Math.ceil(totalpagenum);i++){
         pageNum.push(i);
     }
     let IncrementEllipsis = null;
@@ -17,13 +17,7 @@ const Pagenumber = ({totalpagenum,perpage, paginate,decrease,increase,currentpag
     if ( minpagenumlimit >= 1 ) {
           DecrementEllipsis = <Pagination.Ellipsis onClick={()=> decrease()} />;
     }  
-    // if(currentpage=1){
-    //     maxpagenumlimit = 5;
-    //     minpagenumlimit = 0;
-    // } else if (currentpage=Math.ceil(totalpagenum/perpage)){
-    //     maxpagenumlimit = Math.ceil(totalpagenum/perpage);
-    //     minpagenumlimit = maxpagenumlimit - pagenumlimit;
-    // }
+   
 
     return (
         <div>
@@ -38,8 +32,8 @@ const Pagenumber = ({totalpagenum,perpage, paginate,decrease,increase,currentpag
                 }
                 )}
             {IncrementEllipsis}
-            <Pagination.Next disabled={currentpage === Math.ceil(totalpagenum/perpage)? true:false} onClick={()=> increase()}/>
-            <Pagination.Last onClick={()=> paginate(Math.ceil(totalpagenum/perpage))} disabled={currentpage === Math.ceil(totalpagenum/perpage) ? true:false}/>
+            <Pagination.Next disabled={currentpage === Math.ceil(totalpagenum)? true:false} onClick={()=> increase()}/>
+            <Pagination.Last onClick={()=> paginate(Math.ceil(totalpagenum))} disabled={currentpage === Math.ceil(totalpagenum) ? true:false}/>
         </Pagination> 
         </div>
     )

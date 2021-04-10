@@ -14,7 +14,7 @@ function App() {
   const [data, setdata] = useState([]);
   // State tui add them vao ---------->
   const [currentpage, setcurrentpage] = useState(1); 
-  const [perpage] = useState(7); // perpage is const, no need setperpage
+  const [perpage] = useState(12); // perpage is const, no need setperpage
   const [totalpagenum, setTotalpagenum] = useState();
   const [pagenumlimit] = useState(5); // no need setPagenumlimit, so delete for deploy
   const [maxpagenumlimit, setMaxpagenumlimit] = useState(5);
@@ -77,15 +77,15 @@ function App() {
     if(number===1){
       setMaxpagenumlimit(5);
       setMinpagenumlimit (0);
-    } else if (number===Math.ceil(totalpagenum/perpage)){
-      setMaxpagenumlimit(Math.ceil(totalpagenum/perpage));
-      setMinpagenumlimit (Math.ceil(totalpagenum/perpage) - pagenumlimit);
+    } else if (number===Math.ceil(totalpagenum)){
+      setMaxpagenumlimit(Math.ceil(totalpagenum));
+      setMinpagenumlimit (Math.ceil(totalpagenum) - pagenumlimit);
     }
   
   }
   const decrease = ()=>{
     setcurrentpage((currentpage)=>--currentpage)
-    if((currentpage -1)%pagenumlimit === 0){
+    if((currentpage -1)<=minpagenumlimit){
       setMaxpagenumlimit(maxpagenumlimit - pagenumlimit);
       setMinpagenumlimit(minpagenumlimit - pagenumlimit);
     }
