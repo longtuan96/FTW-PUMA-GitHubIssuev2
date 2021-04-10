@@ -3,6 +3,7 @@ import Nav_Header from "./components/Nav_Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import Pagenumber from "./components/Pagenumber"
+import Content from "./components/Content"
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   const [user, setUser] = useState("facebook");
   const [repo, setRepo] = useState("react");
   const [issuesId, setIssuesId] = useState(21209);
+  const [data, setdata] = useState([]);
   const [currentpage, setcurrentpage] = useState(1); 
   const [perpage] = useState(9); // perpage is const, no need setperpage
   const [totalpagenum, setTotalpagenum] = useState();
@@ -65,6 +67,12 @@ function App() {
     <div>
       <Nav_Header/>
       <Pagenumber totalpagenum={totalpagenum} perpage={perpage} paginate={paginate} decrease={decrease} increase={increase} />
+      <Content
+        img={data[0] && data[0].user.avatar_url}
+        content_title={data[0] && data[0].title}
+        content_text={data[0] && text_truncate(data[0].body, 100, "...")}
+        content_comment={data[0] && data[0].comments}
+      />
     </div>
   );
 }
