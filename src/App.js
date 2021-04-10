@@ -10,7 +10,7 @@ function App() {
   const [user, setUser] = useState("facebook");
   const [repo, setRepo] = useState("react");
   const [issuesId, setIssuesId] = useState(21209);
-  const [data, setData] = useState("");
+  const [data, setData] = useState({});
   const getIssues = async () => {
     let url = `https://api.github.com/repos/${user}/${repo}/issues?state=all`;
     let res = await fetch(url);
@@ -47,9 +47,9 @@ function App() {
       <Nav_Header />
       <Content
         img={data[0] && data[0].user.avatar_url}
-        content_title={data[0].title}
-        content_text={text_truncate(data[0].body, 100, "...")}
-        content_comment={data[0].comments}
+        content_title={data[0] && data[0].title}
+        content_text={data[0] && text_truncate(data[0].body, 100, "...")}
+        content_comment={data[0] && data[0].comments}
       />
     </div>
   );
