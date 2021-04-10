@@ -19,7 +19,6 @@ function App() {
     const link = res.headers.get("link");
     console.log("this is link",link)
     let data = await res.json();
-   
     console.log("data: ", data);
   };
   const getComments = async () => {

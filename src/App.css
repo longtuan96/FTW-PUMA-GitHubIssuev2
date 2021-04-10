@@ -14,7 +14,7 @@
 .nav-header-left a {
   width: 40px;
   height: 40px;
-  background-image: url("./image/Vancouver.jfif");
+  background-image: url("./image/7947.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-size: cover;
@@ -74,4 +74,16 @@
   align-items: center;
   width: 80%;
   margin-right: 5%;
+}
+
+/* ----------------------------- */
+.div-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  width: 100%;
+}
+.card-content {
+  display: flex;
+  background-color: violet;
 }
