@@ -40,11 +40,12 @@ function App() {
     let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
     let res = await fetch(url);
     const link = res.headers.get("link");
-
+    
     if (link) {
       const getTotalPage = link.match(/page=(\d+)&per_page=\d+>; rel="last"/); // regular expression
       if (getTotalPage) {
         setTotalpagenum(parseInt(getTotalPage[1]));}
+        console.log(getTotalPage)
     }
   }
 

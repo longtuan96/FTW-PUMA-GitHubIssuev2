@@ -14,14 +14,14 @@ const Pagenumber = ({totalpagenum,perpage, paginate,decrease,increase,currentpag
         <div>
         <Pagination>
             <Pagination.First onClick={()=> paginate(1)} />
-            <Pagination.Prev onClick={()=> decrease()}/>
+            <Pagination.Prev disabled={currentpage === 1? true:false} onClick={()=> decrease()}/>
             {pageNum.map((number)=>{
                 if (number <= maxpagenumlimit && number > minpagenumlimit){
                     return <Pagination.Item key={number} active={number === active} onClick={()=> paginate(number)}>{number}</Pagination.Item>}
                 else {return null}
                 }
                 )}
-            <Pagination.Next onClick={()=> increase()}/>
+            <Pagination.Next disabled={currentpage === Math.ceil(totalpagenum/perpage)? true:false} onClick={()=> increase()}/>
             <Pagination.Last onClick={()=> paginate(Math.ceil(totalpagenum/perpage))} />
         </Pagination> 
         </div>
