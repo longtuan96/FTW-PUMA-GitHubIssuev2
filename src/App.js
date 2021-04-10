@@ -1,10 +1,10 @@
 import "./App.css";
 import Nav_Header from "./components/Nav_Header";
 import "bootstrap/dist/css/bootstrap.min.css";
-import ReactDOM from "react-dom";
 
 import { useEffect, useState } from "react";
 import IssueInfo from "./components/IssueInfo";
+import Content from "./components/Content";
 
 function App() {
   const [user, setUser] = useState("facebook");
@@ -20,6 +20,8 @@ function App() {
   const [commentAvatar, setCommentAvatar] = useState("");
 
   //get data about issues using the user name and repo
+
+  const [data, setData] = useState({});
   const getIssues = async () => {
     let url = `https://api.github.com/repos/${user}/${repo}/issues?state=all`;
     let res = await fetch(url);
@@ -28,6 +30,8 @@ function App() {
     console.log("data: ", res);
     setIssuesNum(data[0].number);
     setissueTitle(data[0].title);
+
+    setData(data);
   };
 
   //get comments of a specific issue VD: issue number 21209
@@ -36,14 +40,29 @@ function App() {
     let res = await fetch(url);
     let data = await res.json();
 
-    console.log("comments: ", data);
+    // console.log("comments: ", data);
     setCommentBody(data[0].body);
     setCommentAvatar(data[0].user.avatar_url);
+
+    setData(data);
   };
   useEffect(() => {
     getIssues();
     getComments(21209);
   }, []);
+  const text_truncate = (str, length, ending) => {
+    if (length == null) {
+      length = 100;
+    }
+    if (ending == null) {
+      ending = "...";
+    }
+    if (str.length > length) {
+      return str.substring(0, length - ending.length) + ending;
+    } else {
+      return str;
+    }
+  };
   return (
     <div>
       <Nav_Header />
@@ -55,6 +74,12 @@ function App() {
         comment_elapseTime={commentElapseTime}
         comment_avatar={commentAvatar}
         comment_body={commentBody}
+      />
+      <Content
+        img={data[0] && data[0].user.avatar_url}
+        content_title={data[0] && data[0].title}
+        content_text={data[0] && text_truncate(data[0].body, 100, "...")}
+        content_comment={data[0] && data[0].comments}
       />
     </div>
   );
