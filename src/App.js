@@ -2,39 +2,60 @@ import "./App.css";
 import Nav_Header from "./components/Nav_Header";
 import "bootstrap/dist/css/bootstrap.min.css";
 import ReactDOM from "react-dom";
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fab } from "@fortawesome/free-brands-svg-icons";
-import { faCheckSquare, faCoffee } from "@fortawesome/free-solid-svg-icons";
-import { useEffect, useState } from "react";
-library.add(fab, faCheckSquare, faCoffee);
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+import { useEffect, useState } from "react";
+import IssueInfo from "./components/IssueInfo";
+
 function App() {
-  console.log(API_KEY);
   const [user, setUser] = useState("facebook");
   const [repo, setRepo] = useState("react");
-  const [issuesId, setIssuesId] = useState(21209);
+  const [issuesNum, setIssuesNum] = useState(21209);
+  const [issueTitle, setissueTitle] = useState("");
 
+  const [issueBody, setIssueBody] = useState("");
+  const [comments, setComments] = useState("");
+  const [commentBody, setCommentBody] = useState("");
+  const [commentUser, setCommentUser] = useState("");
+  const [commentElapseTime, setCommentElapseTime] = useState("");
+  const [commentAvatar, setCommentAvatar] = useState("");
+
+  //get data about issues using the user name and repo
   const getIssues = async () => {
     let url = `https://api.github.com/repos/${user}/${repo}/issues?state=all`;
     let res = await fetch(url);
     let data = await res.json();
-    // let res = await octokit.request("GET /issues");
-    console.log("data: ", data);
+
+    console.log("data: ", res);
+    setIssuesNum(data[0].number);
+    setissueTitle(data[0].title);
   };
-  const getComments = async () => {
-    let url = `https://api.github.com/repos/${user}/${repo}/issues/21209/comments`;
+
+  //get comments of a specific issue VD: issue number 21209
+  const getComments = async (num) => {
+    let url = `https://api.github.com/repos/${user}/${repo}/issues/${num}/comments`;
     let res = await fetch(url);
     let data = await res.json();
-    // let res = await octokit.request("GET /issues");
-    console.log("data: ", data);
+
+    console.log("comments: ", data);
+    setCommentBody(data[0].body);
+    setCommentAvatar(data[0].user.avatar_url);
   };
   useEffect(() => {
     getIssues();
+    getComments(21209);
   }, []);
   return (
     <div>
       <Nav_Header />
+      <IssueInfo
+        issue_number={issuesNum}
+        issue_title={issueTitle}
+        issue_body={issueBody}
+        comment_user={commentUser}
+        comment_elapseTime={commentElapseTime}
+        comment_avatar={commentAvatar}
+        comment_body={commentBody}
+      />
     </div>
   );
 }
