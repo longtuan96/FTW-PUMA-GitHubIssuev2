@@ -10,14 +10,13 @@ function App() {
   const [user, setUser] = useState("facebook");
   const [repo, setRepo] = useState("react");
   const [issuesId, setIssuesId] = useState(21209);
-  const [page, setpage] = useState(1);
-  const [perpage, setperpage] = useState(12);
+  const [currentpage, setcurrentpage] = useState(1); 
+  const [perpage] = useState(9); // perpage is const, no need setperpage
+  const [totalpagenum, setTotalpagenum] = useState();
 
   const getIssues = async () => {
-    let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${page}&per_page=${perpage}`;
+    let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
     let res = await fetch(url);
-    const link = res.headers.get("link");
-    console.log("this is link",link)
     let data = await res.json();
     console.log("data: ", data);
   };
@@ -25,21 +24,47 @@ function App() {
     let url = `https://api.github.com/repos/${user}/${repo}/issues/21209/comments`;
     let res = await fetch(url);
     let data = await res.json();
-  
     console.log("data: ", data);
   };
 
-  const increasepage = () =>{
-    console.log(page)
-    // setpage(2)
+ // Get totalnumber of page based on perpage
+  const getEntirepage = async () =>{
+    let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
+    let res = await fetch(url);
+    const link = res.headers.get("link");
+
+    if (link) {
+      const getTotalPage = link.match(/page=(\d+)&per_page=\d+>; rel="last"/); // regular expression
+      if (getTotalPage) {
+        setTotalpagenum(parseInt(getTotalPage[1]));}
+    }
   }
+
   useEffect(() => {
     getIssues();
-  }, []);
+    getEntirepage();
+  }, [currentpage]);
+
+  // Change page
+  const paginate =(number)=>{
+    console.log(number)
+    setcurrentpage(number)
+    console.log(totalpagenum)
+  }
+  const decrease = ()=>{
+    setcurrentpage((currentpage)=>--currentpage)
+    console.log(currentpage)
+  }
+
+  const increase = ()=>{
+    setcurrentpage((currentpage)=>++currentpage)
+    console.log(currentpage)
+  }
+
   return (
     <div>
       <Nav_Header/>
-      <Pagenumber page={page} perpage={perpage} increasepage={increasepage}/>
+      <Pagenumber totalpagenum={totalpagenum} perpage={perpage} paginate={paginate} decrease={decrease} increase={increase} />
     </div>
   );
 }
