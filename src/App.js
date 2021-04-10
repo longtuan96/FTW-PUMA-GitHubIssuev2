@@ -16,7 +16,7 @@ function App() {
   const [currentpage, setcurrentpage] = useState(1); 
   const [perpage] = useState(7); // perpage is const, no need setperpage
   const [totalpagenum, setTotalpagenum] = useState();
-  const [pagenumlimit, setPagenumlimit] = useState(5);
+  const [pagenumlimit] = useState(5); // no need setPagenumlimit, so delete for deploy
   const [maxpagenumlimit, setMaxpagenumlimit] = useState(5);
   const [minpagenumlimit, setMinpagenumlimit] = useState(0);
   //---------->
@@ -74,6 +74,14 @@ function App() {
     console.log(number)
     setcurrentpage(number)
     console.log(totalpagenum)
+    if(number===1){
+      setMaxpagenumlimit(5);
+      setMinpagenumlimit (0);
+    } else if (number===Math.ceil(totalpagenum/perpage)){
+      setMaxpagenumlimit(Math.ceil(totalpagenum/perpage));
+      setMinpagenumlimit (Math.ceil(totalpagenum/perpage) - pagenumlimit);
+    }
+  
   }
   const decrease = ()=>{
     setcurrentpage((currentpage)=>--currentpage)
@@ -93,6 +101,7 @@ function App() {
     console.log(currentpage)
   }
 
+ 
   return (
     <div>
       <Nav_Header/>

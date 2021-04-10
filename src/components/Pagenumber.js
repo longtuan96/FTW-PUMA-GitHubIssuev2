@@ -9,20 +9,37 @@ const Pagenumber = ({totalpagenum,perpage, paginate,decrease,increase,currentpag
     for(let i=1; i<=Math.ceil(totalpagenum/perpage);i++){
         pageNum.push(i);
     }
+    let IncrementEllipsis = null;
+    if (pageNum.length > maxpagenumlimit ) {
+        IncrementEllipsis = <Pagination.Ellipsis onClick={()=> increase()} />;
+    }
+    let DecrementEllipsis = null;
+    if ( minpagenumlimit >= 1 ) {
+          DecrementEllipsis = <Pagination.Ellipsis onClick={()=> decrease()} />;
+    }  
+    // if(currentpage=1){
+    //     maxpagenumlimit = 5;
+    //     minpagenumlimit = 0;
+    // } else if (currentpage=Math.ceil(totalpagenum/perpage)){
+    //     maxpagenumlimit = Math.ceil(totalpagenum/perpage);
+    //     minpagenumlimit = maxpagenumlimit - pagenumlimit;
+    // }
 
     return (
         <div>
         <Pagination>
-            <Pagination.First onClick={()=> paginate(1)} />
+            <Pagination.First onClick={()=> paginate(1)} disabled={currentpage === 1? true:false}/>
             <Pagination.Prev disabled={currentpage === 1? true:false} onClick={()=> decrease()}/>
+            {DecrementEllipsis}
             {pageNum.map((number)=>{
                 if (number <= maxpagenumlimit && number > minpagenumlimit){
                     return <Pagination.Item key={number} active={number === active} onClick={()=> paginate(number)}>{number}</Pagination.Item>}
                 else {return null}
                 }
                 )}
+            {IncrementEllipsis}
             <Pagination.Next disabled={currentpage === Math.ceil(totalpagenum/perpage)? true:false} onClick={()=> increase()}/>
-            <Pagination.Last onClick={()=> paginate(Math.ceil(totalpagenum/perpage))} />
+            <Pagination.Last onClick={()=> paginate(Math.ceil(totalpagenum/perpage))} disabled={currentpage === Math.ceil(totalpagenum/perpage) ? true:false}/>
         </Pagination> 
         </div>
     )
