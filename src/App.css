@@ -77,13 +77,26 @@
 }
 
 /* ----------------------------- */
-.div-content {
-  display: flex;
-  justify-content: center;
-  flex-direction: row;
-  width: 100%;
-}
+
 .card-content {
   display: flex;
   background-color: violet;
+}
+
+.divLabel {
+  display: flex;
+}
+.issueLabel {
+  background-color: grey;
+  height: max-content;
+  width: fit-content;
+  color: #fff;
+  font-weight: 800;
+  padding: 4px;
+  margin: 4px;
+  border-radius: 10px;
+}
+.modal-content {
+  width: 180% !important;
+  height: auto;
 }

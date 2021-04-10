@@ -1,18 +1,38 @@
 import React from "react";
-import { Card, Button } from "react-bootstrap";
+import { Media } from "react-bootstrap";
+import IssueLabel from "./IssueLabel";
 
-const Content = ({ img, content_title, content_text, content_comment }) => {
+const Content = ({
+  authorAvatar,
+  issue_number,
+  issue_title,
+  issue_author,
+  issue_comment,
+  issue_lastUpdate,
+  issue_body,
+  issue_labels,
+}) => {
   return (
     <div className="div-content">
-      <Card style={{ width: "18rem" }} className="card-content">
-        <Card.Img variant="top" src={img} />
-        <Card.Body>
-          <Card.Title>{content_title}</Card.Title>
-          <Card.Text>{content_text}</Card.Text>
-          <Card.Text>{content_comment}</Card.Text>
-          <Button variant="primary">READ MORE</Button>
-        </Card.Body>
-      </Card>
+      <Media>
+        <img
+          width={64}
+          height={64}
+          className="mr-3"
+          src={authorAvatar}
+          alt="the avatar"
+        />
+        <Media.Body>
+          <h4>{`#${issue_number} ${issue_title}`}</h4>
+          <h6>{`@${issue_author} Last updated: ${issue_lastUpdate} Comment:${issue_comment}`}</h6>
+          <p>{issue_body}</p>
+          <div className={"divLabel"}>
+            {issue_labels.map((item) => (
+              <IssueLabel key={item.id} name={item.name} />
+            ))}
+          </div>
+        </Media.Body>
+      </Media>
     </div>
   );
 };

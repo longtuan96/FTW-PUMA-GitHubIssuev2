@@ -5,14 +5,16 @@ const Nav_Header = () => {
   return (
     <nav className="nav-header">
       <div className="nav-header-left">
-        <a href="" id="img-id"></a>
+        <a href id="img-id" alt="a icon">
+          {" "}
+        </a>
         <p>GitHubs Issues</p>
       </div>
       <div className="nav-header-right">
         <div className="search">
           <input type="text" className="searchTerm" value="facebook/react" />
           <button type="submit" className="searchButton">
-            <i class="fa fa-search"></i>
+            <i className="fa fa-search"></i>
           </button>
         </div>
       </div>

@@ -11,6 +11,6 @@ Lam
 Khuong
 
 - [x] create searchbar , simple UI for website
-- [ ] making the card to list out issues
+- [x] making the card to list out issues
 
 Huy

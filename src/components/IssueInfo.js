@@ -1,42 +1,33 @@
-import React, { useState } from "react";
-import { Button, Media, Modal, ModalFooter, Pagination } from "react-bootstrap";
+import moment from "moment";
+import React from "react";
+import { Modal, ModalFooter } from "react-bootstrap";
+import Comment from "./Comment";
 
-const IssueInfo = (props) => {
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+const IssueInfo = ({ commentData, issueNum, issueTitle, issueBody }) => {
+  const elapseTime = (time) => {
+    return moment(time).fromNow();
+  };
   return (
     <div>
       <>
-        <Button variant="primary" onClick={handleShow}>
-          Launch demo modal
-        </Button>
-
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <ModalFooter>
-            <Media>
-              <img
-                width={64}
-                height={64}
-                className="mr-3"
-                src={props.comment_avatar}
-                alt="The avatar"
+        <Modal.Header closeButton>
+          <Modal.Title>{`#${issueNum} ${issueTitle}`}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>{`${issueBody}`}</Modal.Body>
+        <ModalFooter>
+          <div className="">
+            <h1>{"Comments:"}</h1>
+            {commentData.map((item) => (
+              <Comment
+                key={item.id}
+                commentBody={item.body}
+                commentAuthor={item.user.login}
+                commentTime={elapseTime(item.created_at)}
+                commentAvatar={item.user.avatar_url}
               />
-              <Media.Body>
-                {/* <div className={"d-flex"}>
-                  <p>{props.issue_number}</p>
-
-                  <p></p>
-                </div> */}
-              </Media.Body>
-            </Media>
-          </ModalFooter>
-        </Modal>
+            ))}
+          </div>
+        </ModalFooter>
       </>
     </div>
   );
