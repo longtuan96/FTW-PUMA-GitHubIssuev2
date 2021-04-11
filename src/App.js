@@ -8,6 +8,7 @@ import Content from "./components/Content";
 
 import { Modal } from "react-bootstrap";
 import moment from "moment";
+import Pagenumber from "./components/Pagenumber";
 
 function App() {
   const [user, setUser] = useState("facebook");
@@ -20,15 +21,20 @@ function App() {
 
   const [showModal, setShowModal] = useState(false);
   //get data about issues using the user name and repo
-
+  const [currentpage, setcurrentpage] = useState(1);
+  const [perpage] = useState(12); // perpage is const, no need setperpage
+  const [totalpagenum, setTotalpagenum] = useState();
+  const [pagenumlimit] = useState(5); // no need setPagenumlimit, so delete for deploy
+  const [maxpagenumlimit, setMaxpagenumlimit] = useState(5);
+  const [minpagenumlimit, setMinpagenumlimit] = useState(0);
   const [data, setData] = useState([]);
+
   const getIssues = async () => {
-    let url = `https://api.github.com/repos/${user}/${repo}/issues?state=all`;
+    let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
     let res = await fetch(url);
     let data = await res.json();
-
-    console.log("data: ", data);
     setData(data);
+    console.log("data: ", data);
   };
 
   //get comments of a specific issue VD: issue number 21220
@@ -40,12 +46,31 @@ function App() {
     // console.log("comments: ", commentData);
     setCommentData(commentData);
   };
+
+  // Get totalnumber of page based on perpage ---------->
+  const getEntirepage = async () => {
+    let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
+    let res = await fetch(url);
+    const link = res.headers.get("link");
+
+    if (link) {
+      const getTotalPage = link.match(/page=(\d+)&per_page=\d+>; rel="last"/); // regular expression
+      if (getTotalPage) {
+        setTotalpagenum(parseInt(getTotalPage[1]));
+      }
+      console.log(getTotalPage);
+    }
+  };
+
   useEffect(() => {
     getIssues();
     // getComments(21229);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
+    getEntirepage();
+  }, [currentpage]);
+
+  // truncate content
   const text_truncate = (str, length, ending) => {
     if (length == null) {
       length = 100;
@@ -74,9 +99,51 @@ function App() {
     console.log("modal shown");
   };
 
+  // Change page ----------->
+  const paginate = (number) => {
+    console.log(number);
+    setcurrentpage(number);
+    console.log(totalpagenum);
+    if (number === 1) {
+      setMaxpagenumlimit(5);
+      setMinpagenumlimit(0);
+    } else if (number === Math.ceil(totalpagenum)) {
+      setMaxpagenumlimit(Math.ceil(totalpagenum));
+      setMinpagenumlimit(Math.ceil(totalpagenum) - pagenumlimit);
+    }
+  };
+  const decrease = () => {
+    setcurrentpage((currentpage) => --currentpage);
+    if (currentpage - 1 <= minpagenumlimit) {
+      setMaxpagenumlimit(maxpagenumlimit - pagenumlimit);
+      setMinpagenumlimit(minpagenumlimit - pagenumlimit);
+    }
+    console.log(currentpage);
+  };
+
+  const increase = () => {
+    setcurrentpage((currentpage) => ++currentpage);
+    if (currentpage + 1 > maxpagenumlimit) {
+      setMaxpagenumlimit(maxpagenumlimit + pagenumlimit);
+      setMinpagenumlimit(minpagenumlimit + pagenumlimit);
+    }
+    console.log(currentpage);
+  };
+
   return (
     <div>
       <NavHeader />
+      <Pagenumber
+        totalpagenum={totalpagenum}
+        perpage={perpage}
+        currentpage={currentpage}
+        paginate={paginate}
+        decrease={decrease}
+        increase={increase}
+        pagenumlimit={pagenumlimit}
+        maxpagenumlimit={maxpagenumlimit}
+        minpagenumlimit={minpagenumlimit}
+      />
       <div className={"container "}>
         {data !== []
           ? data.map((el) => (
