@@ -1,7 +1,7 @@
 import React from "react";
 import { Media } from "react-bootstrap";
 import IssueLabel from "./IssueLabel";
-
+import ReactMarkdown from "react-markdown";
 const Content = ({
   authorAvatar,
   issue_number,
@@ -25,7 +25,10 @@ const Content = ({
         <Media.Body>
           <h4>{`#${issue_number} ${issue_title}`}</h4>
           <h6>{`@${issue_author} Last updated: ${issue_lastUpdate}  Comment:${issue_comment}`}</h6>
-          <p>{issue_body}</p>
+
+          <p>
+            <ReactMarkdown>{issue_body}</ReactMarkdown>{" "}
+          </p>
           <div className={"divLabel"}>
             {issue_labels.map((item) => (
               <IssueLabel key={item.id} name={item.name} />

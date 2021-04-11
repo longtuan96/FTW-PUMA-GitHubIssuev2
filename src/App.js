@@ -37,11 +37,15 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   const getIssues = async () => {
-    let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
-    let res = await fetch(url);
-    let data = await res.json();
-    setData(data);
-    console.log("data: ", data);
+    try {
+      let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
+      let res = await fetch(url);
+      let data = await res.json();
+      setData(data);
+      console.log("data: ", data);
+    } catch (error) {
+      alert("Error: ", error.message);
+    }
   };
 
   //get comments of a specific issue VD: issue number 21220
@@ -74,11 +78,10 @@ function App() {
     setLoading(true);
 
     getIssues();
-    // getComments(21229);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     getEntirepage();
     setLoading(false);
-  }, [currentpage]);
+  }, [currentpage, user, repo]);
 
   // truncate content
   const text_truncate = (str, length, ending) => {
@@ -141,8 +144,14 @@ function App() {
   };
   const handleInput = (string) => {
     let stringArray = string.split("/");
-    setUser(stringArray[0]);
-    setRepo(stringArray[1]);
+    if (stringArray[0] === "https:") {
+      setUser(stringArray[3]);
+      setRepo(stringArray[4]);
+    } else {
+      setUser(stringArray[0]);
+      setRepo(stringArray[1]);
+    }
+
     getIssues();
     console.log("function work");
   };

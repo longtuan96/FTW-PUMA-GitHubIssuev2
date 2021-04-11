@@ -2,7 +2,7 @@ import moment from "moment";
 import React from "react";
 import { Modal, ModalFooter } from "react-bootstrap";
 import Comment from "./Comment";
-
+import ReactMarkdown from "react-markdown";
 const IssueInfo = ({ commentData, issueNum, issueTitle, issueBody }) => {
   const elapseTime = (time) => {
     return moment(time).fromNow();
@@ -13,7 +13,9 @@ const IssueInfo = ({ commentData, issueNum, issueTitle, issueBody }) => {
         <Modal.Header closeButton>
           <Modal.Title>{`#${issueNum} ${issueTitle}`}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{`${issueBody}`}</Modal.Body>
+        <Modal.Body>
+          <ReactMarkdown>{issueBody}</ReactMarkdown>
+        </Modal.Body>
         <ModalFooter>
           <div className={"text-left"}>
             {commentData.length === 0 ? (
