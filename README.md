@@ -6,7 +6,7 @@ Tuan:
 Lam
 
 - [x] pull api get issues according to user and repo
-- [ ] create pagination
+- [x] create pagination
 
 Khuong
 
