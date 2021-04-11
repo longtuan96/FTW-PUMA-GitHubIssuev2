@@ -70,7 +70,9 @@ function App() {
   };
 
   useEffect(() => {
+    window.scrollBy(0, -10);
     setLoading(true);
+
     getIssues();
     // getComments(21229);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -156,7 +158,18 @@ function App() {
       ) : (
         <div>
           <NavHeader handleInput={handleInput} />
-
+          <Pagenumber
+            className="text-center"
+            totalpagenum={totalpagenum}
+            perpage={perpage}
+            currentpage={currentpage}
+            paginate={paginate}
+            decrease={decrease}
+            increase={increase}
+            pagenumlimit={pagenumlimit}
+            maxpagenumlimit={maxpagenumlimit}
+            minpagenumlimit={minpagenumlimit}
+          />
           <div className={"container "}>
             {data !== []
               ? data.map((el) => (
@@ -191,18 +204,6 @@ function App() {
               issueBody={issueBody}
             />
           </Modal>
-          <Pagenumber
-            className="text-center"
-            totalpagenum={totalpagenum}
-            perpage={perpage}
-            currentpage={currentpage}
-            paginate={paginate}
-            decrease={decrease}
-            increase={increase}
-            pagenumlimit={pagenumlimit}
-            maxpagenumlimit={maxpagenumlimit}
-            minpagenumlimit={minpagenumlimit}
-          />
         </div>
       )}
     </div>

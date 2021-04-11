@@ -103,7 +103,8 @@
 }
 .pagination {
   justify-content: center;
-  margin: 30px;
+  margin: 20px;
+  margin-bottom: 0;
 }
 
 .div-content:hover {
