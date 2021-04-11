@@ -187,10 +187,10 @@ function App() {
                       issue_title={el && el.title}
                       issue_author={el && el.user.login}
                       issue_comment={el && el.comments}
-                      // issue_lastUpdate={el && elapseTime(el.Updated_At)}
-                      issue_lastUpdate={
-                        el && moment(el.Updated_At).startOf("day").fromNow()
-                      }
+                      issue_lastUpdate={el && elapseTime(el.updated_at)}
+                      // issue_lastUpdate={
+                      //   el && moment(el.Updated_At).startOf("day").fromNow()
+                      // }
                       issue_body={el && text_truncate(el.body, 100, "...")}
                       issue_labels={el && el.labels}
                     />
