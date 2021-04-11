@@ -1,7 +1,7 @@
 import React from "react";
 import { nav } from "react-bootstrap";
 
-const Nav_Header = () => {
+const NavHeader = (props) => {
   return (
     <nav className="nav-header">
       <div className="nav-header-left">
@@ -12,7 +12,14 @@ const Nav_Header = () => {
       </div>
       <div className="nav-header-right">
         <div className="search">
-          <input type="text" className="searchTerm" value="facebook/react" />
+          <input
+            type="text"
+            className="searchTerm"
+            placeholder="Default: facebook/react"
+            onKeyUp={(event) =>
+              event.key === "Enter" ? props.handleInput(event.target.value) : ""
+            }
+          />
           <button type="submit" className="searchButton">
             <i className="fa fa-search"></i>
           </button>
@@ -22,4 +29,4 @@ const Nav_Header = () => {
   );
 };
 
-export default Nav_Header;
+export default NavHeader;

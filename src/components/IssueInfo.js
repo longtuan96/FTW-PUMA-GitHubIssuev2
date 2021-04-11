@@ -15,17 +15,25 @@ const IssueInfo = ({ commentData, issueNum, issueTitle, issueBody }) => {
         </Modal.Header>
         <Modal.Body>{`${issueBody}`}</Modal.Body>
         <ModalFooter>
-          <div className="">
-            <h1>{"Comments:"}</h1>
-            {commentData.map((item) => (
-              <Comment
-                key={item.id}
-                commentBody={item.body}
-                commentAuthor={item.user.login}
-                commentTime={elapseTime(item.created_at)}
-                commentAvatar={item.user.avatar_url}
-              />
-            ))}
+          <div className={"text-left"}>
+            {commentData.length === 0 ? (
+              <div>
+                <p>No comment</p>
+              </div>
+            ) : (
+              <div>
+                <h1>{"Comments:"}</h1>
+                {commentData.map((item) => (
+                  <Comment
+                    key={item.id}
+                    commentBody={item.body}
+                    commentAuthor={item.user.login}
+                    commentTime={elapseTime(item.created_at)}
+                    commentAvatar={item.user.avatar_url}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </ModalFooter>
       </>

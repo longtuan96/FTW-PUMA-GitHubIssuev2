@@ -43,8 +43,8 @@ function App() {
     let res = await fetch(url);
     let commentData = await res.json();
 
-    // console.log("comments: ", commentData);
     setCommentData(commentData);
+    console.log("comments: ", commentData);
   };
 
   // Get totalnumber of page based on perpage ---------->
@@ -129,11 +129,18 @@ function App() {
     }
     console.log(currentpage);
   };
-
+  const handleInput = (string) => {
+    let stringArray = string.split("/");
+    setUser(stringArray[0]);
+    setRepo(stringArray[1]);
+    getIssues();
+    console.log("function work");
+  };
   return (
     <div>
-      <NavHeader />
+      <NavHeader handleInput={handleInput} />
       <Pagenumber
+        className="text-center"
         totalpagenum={totalpagenum}
         perpage={perpage}
         currentpage={currentpage}
@@ -153,6 +160,7 @@ function App() {
                 onClick={() => handleShowModal(el.number, el.title, el.body)}
               >
                 <Content
+                  className="hover"
                   authorAvatar={el && el.user.avatar_url}
                   issue_number={el && el.number}
                   issue_title={el && el.title}
@@ -169,10 +177,10 @@ function App() {
 
       <Modal className="" show={showModal} onHide={handleCloseModal}>
         <IssueInfo
-          commentData={commentData !== [] && commentData}
-          issueNum={commentData && issuesNum}
-          issueTitle={commentData && issueTitle}
-          issueBody={commentData && issueBody}
+          commentData={commentData}
+          issueNum={issuesNum}
+          issueTitle={issueTitle}
+          issueBody={issueBody}
         />
       </Modal>
     </div>
