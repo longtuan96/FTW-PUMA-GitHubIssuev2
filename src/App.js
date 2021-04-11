@@ -1,25 +1,31 @@
 import "./App.css";
 import NavHeader from "./components/NavHeader";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import React from "react";
 import { useEffect, useState } from "react";
 import IssueInfo from "./components/IssueInfo";
 import Content from "./components/Content";
-
 import { Modal } from "react-bootstrap";
 import moment from "moment";
 import Pagenumber from "./components/Pagenumber";
+import ClipLoader from "react-spinners/ClipLoader";
+import { css } from "@emotion/core";
 
+const override = css`
+  display: block;
+  margin: 0 auto;
+  margin-top: 100px;
+  border-color: green;
+`;
 function App() {
   const [user, setUser] = useState("facebook");
   const [repo, setRepo] = useState("react");
   const [issuesNum, setIssuesNum] = useState(0);
   const [issueTitle, setIssueTitle] = useState("");
   const [issueBody, setIssueBody] = useState("");
-
   const [commentData, setCommentData] = useState([]);
-
   const [showModal, setShowModal] = useState(false);
+
   //get data about issues using the user name and repo
   const [currentpage, setcurrentpage] = useState(1);
   const [perpage] = useState(12); // perpage is const, no need setperpage
@@ -28,6 +34,7 @@ function App() {
   const [maxpagenumlimit, setMaxpagenumlimit] = useState(5);
   const [minpagenumlimit, setMinpagenumlimit] = useState(0);
   const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   const getIssues = async () => {
     let url = `https://api.github.com/repos/${user}/${repo}/issues?page=${currentpage}&per_page=${perpage}`;
@@ -63,11 +70,14 @@ function App() {
   };
 
   useEffect(() => {
+    window.scrollBy(0, -10);
+    setLoading(true);
+
     getIssues();
     // getComments(21229);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-
     getEntirepage();
+    setLoading(false);
   }, [currentpage]);
 
   // truncate content
@@ -138,51 +148,67 @@ function App() {
   };
   return (
     <div>
-      <NavHeader handleInput={handleInput} />
-      <Pagenumber
-        className="text-center"
-        totalpagenum={totalpagenum}
-        perpage={perpage}
-        currentpage={currentpage}
-        paginate={paginate}
-        decrease={decrease}
-        increase={increase}
-        pagenumlimit={pagenumlimit}
-        maxpagenumlimit={maxpagenumlimit}
-        minpagenumlimit={minpagenumlimit}
-      />
-      <div className={"container "}>
-        {data !== []
-          ? data.map((el) => (
-              <a
-                href
-                key={el.number}
-                onClick={() => handleShowModal(el.number, el.title, el.body)}
-              >
-                <Content
-                  className="hover"
-                  authorAvatar={el && el.user.avatar_url}
-                  issue_number={el && el.number}
-                  issue_title={el && el.title}
-                  issue_author={el && el.user.login}
-                  issue_comment={el && el.comments}
-                  issue_lastUpdate={el && elapseTime(el.Updated_At)}
-                  issue_body={el && text_truncate(el.body, 100, "...")}
-                  issue_labels={el && el.labels}
-                />
-              </a>
-            ))
-          : console.log("data didnt load")}
-      </div>
-
-      <Modal className="" show={showModal} onHide={handleCloseModal}>
-        <IssueInfo
-          commentData={commentData}
-          issueNum={issuesNum}
-          issueTitle={issueTitle}
-          issueBody={issueBody}
+      {loading ? (
+        <ClipLoader
+          color="#2cfc03"
+          loading={loading}
+          css={override}
+          size={150}
         />
-      </Modal>
+      ) : (
+        <div>
+          <NavHeader handleInput={handleInput} />
+          <Pagenumber
+            className="text-center"
+            totalpagenum={totalpagenum}
+            perpage={perpage}
+            currentpage={currentpage}
+            paginate={paginate}
+            decrease={decrease}
+            increase={increase}
+            pagenumlimit={pagenumlimit}
+            maxpagenumlimit={maxpagenumlimit}
+            minpagenumlimit={minpagenumlimit}
+          />
+          <div className={"container"}>
+            {data !== []
+              ? data.map((el) => (
+                  <a
+                    href
+                    key={el.number}
+                    onClick={() =>
+                      handleShowModal(el.number, el.title, el.body)
+                    }
+                  >
+                    <Content
+                      className="hover"
+                      authorAvatar={el && el.user.avatar_url}
+                      issue_number={el && el.number}
+                      issue_title={el && el.title}
+                      issue_author={el && el.user.login}
+                      issue_comment={el && el.comments}
+                      // issue_lastUpdate={el && elapseTime(el.Updated_At)}
+                      issue_lastUpdate={
+                        el && moment(el.Updated_At).startOf("day").fromNow()
+                      }
+                      issue_body={el && text_truncate(el.body, 100, "...")}
+                      issue_labels={el && el.labels}
+                    />
+                  </a>
+                ))
+              : console.log("data didnt load")}
+          </div>
+
+          <Modal className="" show={showModal} onHide={handleCloseModal}>
+            <IssueInfo
+              commentData={commentData}
+              issueNum={issuesNum}
+              issueTitle={issueTitle}
+              issueBody={issueBody}
+            />
+          </Modal>
+        </div>
+      )}
     </div>
   );
 }

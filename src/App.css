@@ -3,6 +3,7 @@
   display: flex;
   justify-content: space-between;
   height: max-content;
+  background-color: rgb(243, 243, 243);
 }
 .nav-header-left {
   margin: 2vh;
@@ -78,11 +79,6 @@
 
 /* ----------------------------- */
 
-.card-content {
-  display: flex;
-  background-color: violet;
-}
-
 .divLabel {
   display: flex;
 }
@@ -96,12 +92,19 @@
   margin: 4px;
   border-radius: 10px;
 }
+.issueLabel p {
+  margin: 0;
+  margin-left: 3px;
+  margin-right: 3px;
+}
 .modal-content {
   width: 180% !important;
   height: auto;
 }
 .pagination {
   justify-content: center;
+  margin: 20px;
+  margin-bottom: 0;
 }
 
 .div-content:hover {
@@ -109,5 +112,13 @@
   transition: 0.2s;
 }
 .div-content {
-  margin-top: 100px;
+  margin-top: 50px;
+  border: 1px solid #00b4cc;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 50px;
+}
+img {
+  margin: 2px;
+  border-radius: 10px;
 }

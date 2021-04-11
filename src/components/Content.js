@@ -24,7 +24,7 @@ const Content = ({
         />
         <Media.Body>
           <h4>{`#${issue_number} ${issue_title}`}</h4>
-          <h6>{`@${issue_author} Last updated: ${issue_lastUpdate} Comment:${issue_comment}`}</h6>
+          <h6>{`@${issue_author} Last updated: ${issue_lastUpdate}  Comment:${issue_comment}`}</h6>
           <p>{issue_body}</p>
           <div className={"divLabel"}>
             {issue_labels.map((item) => (

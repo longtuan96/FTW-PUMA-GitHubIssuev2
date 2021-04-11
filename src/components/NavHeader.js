@@ -1,5 +1,4 @@
 import React from "react";
-import { nav } from "react-bootstrap";
 
 const NavHeader = (props) => {
   return (
@@ -15,7 +14,7 @@ const NavHeader = (props) => {
           <input
             type="text"
             className="searchTerm"
-            placeholder="Default: facebook/react"
+            placeholder="facebook/react"
             onKeyUp={(event) =>
               event.key === "Enter" ? props.handleInput(event.target.value) : ""
             }
