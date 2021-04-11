@@ -44,7 +44,7 @@ function App() {
     let commentData = await res.json();
 
     setCommentData(commentData);
-    console.log("comments: ", commentData);
+    // console.log("comments: ", commentData);
   };
 
   // Get totalnumber of page based on perpage ---------->
@@ -166,7 +166,7 @@ function App() {
                   issue_title={el && el.title}
                   issue_author={el && el.user.login}
                   issue_comment={el && el.comments}
-                  issue_lastUpdate={el && elapseTime(el.Updated_At)}
+                  issue_lastUpdate={el && elapseTime(el.updated_at)}
                   issue_body={el && text_truncate(el.body, 100, "...")}
                   issue_labels={el && el.labels}
                 />
