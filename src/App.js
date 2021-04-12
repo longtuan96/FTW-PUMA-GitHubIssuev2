@@ -10,6 +10,7 @@ import moment from "moment";
 import Pagenumber from "./components/Pagenumber";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
+import { Alert } from "bootstrap";
 
 const override = css`
   display: block;
@@ -44,7 +45,8 @@ function App() {
       setData(data);
       console.log("data: ", data);
     } catch (error) {
-      alert("Error: ", error.message);
+      console.log(error);
+      // alert("Error: ", error.message);
     }
   };
 
@@ -180,35 +182,41 @@ function App() {
             minpagenumlimit={minpagenumlimit}
           />
           <div className={"container"}>
-            {data !== []
-              ? data.map((el) => (
-                  <a
-                    href
-                    key={el.number}
-                    onClick={() =>
-                      handleShowModal(el.number, el.title, el.body)
-                    }
-                  >
-                    <Content
-                      className="hover"
-                      authorAvatar={el && el.user.avatar_url}
-                      issue_number={el && el.number}
-                      issue_title={el && el.title}
-                      issue_author={el && el.user.login}
-                      issue_comment={el && el.comments}
-                      issue_lastUpdate={el && elapseTime(el.updated_at)}
-                      // issue_lastUpdate={
-                      //   el && moment(el.Updated_At).startOf("day").fromNow()
-                      // }
-                      issue_body={el && text_truncate(el.body, 100, "...")}
-                      issue_labels={el && el.labels}
-                    />
-                  </a>
-                ))
-              : console.log("data didnt load")}
+            {typeof data[0] == typeof {} ? (
+              data.map((el) => (
+                <a
+                  href
+                  key={el.number}
+                  onClick={() => handleShowModal(el.number, el.title, el.body)}
+                >
+                  <Content
+                    className="hover"
+                    authorAvatar={el && el.user.avatar_url}
+                    issue_number={el && el.number}
+                    issue_title={el && el.title}
+                    issue_author={el && el.user.login}
+                    issue_comment={el && el.comments}
+                    issue_lastUpdate={el && elapseTime(el.updated_at)}
+                    // issue_lastUpdate={
+                    //   el && moment(el.Updated_At).startOf("day").fromNow()
+                    // }
+                    issue_body={el && text_truncate(el.body, 100, "...")}
+                    issue_labels={el && el.labels}
+                  />
+                </a>
+              ))
+            ) : (
+              <div>No Issues</div>
+            )}
           </div>
 
-          <Modal className="" show={showModal} onHide={handleCloseModal}>
+          <Modal
+            centered
+            size={"lg"}
+            className=""
+            show={showModal}
+            onHide={handleCloseModal}
+          >
             <IssueInfo
               commentData={commentData}
               issueNum={issuesNum}
