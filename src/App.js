@@ -154,7 +154,6 @@ function App() {
       setRepo(stringArray[1]);
     }
 
-    getIssues();
     console.log("function work");
   };
   return (
@@ -207,9 +206,12 @@ function App() {
               ))
             ) : (
               <div
-                className={"d-flex justify-content-center align-items-center"}
+                className={
+                  "d-flex flex-column justify-content-center align-items-center"
+                }
               >
                 <Spinner animation="border" />
+                <Alert variant={"danger"}>NOT FOUND!!!!</Alert>
               </div>
             )}
           </div>
