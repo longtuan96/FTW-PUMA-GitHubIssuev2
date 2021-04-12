@@ -5,12 +5,12 @@ import React from "react";
 import { useEffect, useState } from "react";
 import IssueInfo from "./components/IssueInfo";
 import Content from "./components/Content";
-import { Modal } from "react-bootstrap";
+import { Modal, Spinner } from "react-bootstrap";
 import moment from "moment";
 import Pagenumber from "./components/Pagenumber";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
-import { Alert } from "bootstrap";
+import { Alert } from "react-bootstrap";
 
 const override = css`
   display: block;
@@ -206,7 +206,11 @@ function App() {
                 </a>
               ))
             ) : (
-              <div>No Issues</div>
+              <div
+                className={"d-flex justify-content-center align-items-center"}
+              >
+                <Spinner animation="border" />
+              </div>
             )}
           </div>
 
